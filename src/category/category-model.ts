@@ -1,23 +1,5 @@
 import mongoose from "mongoose";
-
-interface PriceConfiguration {
-    [key: string]: {
-        priceType: "base" | "additional";
-        availableOptions: string[];
-    };
-}
-
-interface Attribute {
-    name: string;
-    widgetType: "switch" | "radio";
-    defaultValue: string;
-    availableOptions: string[];
-}
-export interface Category {
-    name: string;
-    PriceConfiguration: PriceConfiguration;
-    attributes: Attribute[];
-}
+import { Attribute, Category, PriceConfiguration } from "./category-types";
 
 const priceConfigurationSchema = new mongoose.Schema<PriceConfiguration>({
     priceType: {
@@ -56,7 +38,7 @@ const categorySchema = new mongoose.Schema<Category>({
         type: String,
         required: true,
     },
-    PriceConfiguration: {
+    priceConfiguration: {
         type: Map,
         of: priceConfigurationSchema,
         required: true,
@@ -68,3 +50,44 @@ const categorySchema = new mongoose.Schema<Category>({
 });
 
 export default mongoose.model("Category", categorySchema);
+
+// {
+// 	"name": "Pizza",
+// 	"priceConfiguration": {
+// 		"Size": {
+// 			"priceType": "base",
+// 			"availableOptions": [
+// 				"Small",
+// 				"Medium",
+// 				"Large"
+// 			]
+// 		},
+// 		"Curst": {
+// 			"priceType": "additional",
+// 			"availableOptions": [
+// 				"Thin",
+// 				"Thick"
+// 			]
+// 		}
+// 	},
+// 	"attributes": [
+// 		{
+// 			"name": "isHit",
+// 			"widgetType": "switch",
+// 			"defaultValue": "No",
+// 			"availableOptions": [
+// 				"Yes",
+// 				"No"
+// 			]
+// 		},
+// 		{
+// 			"name": "Spiciness",
+// 			"widgetType": "radio",
+// 			"availableOptions": [
+// 				"Less",
+// 				"Medium",
+// 				"Hot"
+// 			]
+// 		}
+// 	]
+// }
