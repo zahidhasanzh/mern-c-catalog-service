@@ -52,42 +52,29 @@ const categorySchema = new mongoose.Schema<Category>({
 export default mongoose.model("Category", categorySchema);
 
 // {
-// 	"name": "Pizza",
-// 	"priceConfiguration": {
-// 		"Size": {
-// 			"priceType": "base",
-// 			"availableOptions": [
-// 				"Small",
-// 				"Medium",
-// 				"Large"
-// 			]
-// 		},
-// 		"Curst": {
-// 			"priceType": "additional",
-// 			"availableOptions": [
-// 				"Thin",
-// 				"Thick"
-// 			]
-// 		}
-// 	},
-// 	"attributes": [
-// 		{
-// 			"name": "isHit",
-// 			"widgetType": "switch",
-// 			"defaultValue": "No",
-// 			"availableOptions": [
-// 				"Yes",
-// 				"No"
-// 			]
-// 		},
-// 		{
-// 			"name": "Spiciness",
-// 			"widgetType": "radio",
-// 			"availableOptions": [
-// 				"Less",
-// 				"Medium",
-// 				"Hot"
-// 			]
-// 		}
-// 	]
+//   "name": "Pizza",
+//   "priceConfiguration": {
+//     "Size": {
+//       "priceType": "base",
+//       "availableOptions": ["Small", "Medium", "Large"]
+//     },
+//     "Curst": {
+//       "priceType": "additional",
+//       "availableOptions": ["Thin", "Thick"]
+//     }
+//   },
+//   "attributes": [
+//     {
+//       "name": "isHit",
+//       "widgetType": "switch",
+//       "defaultValue": "No",
+//       "availableOptions": ["Yes", "No"]
+//     },
+//     {
+//       "name": "Spiciness",
+//       "widgetType": "radio",
+//       "defaultValue": "Medium",
+//       "availableOptions": ["Less", "Medium", "Hot"]
+//     }
+//   ]
 // }

@@ -20,6 +20,7 @@ export class CategoryController {
         }
 
         const { name, priceConfiguration, attributes } = req.body as Category;
+
         const category = await this.CategoryService.create({
             name,
             priceConfiguration,
@@ -27,7 +28,6 @@ export class CategoryController {
         });
 
         this.logger.info(`Created category`, { id: category._id });
-
         res.json({ id: category._id });
     }
 }
