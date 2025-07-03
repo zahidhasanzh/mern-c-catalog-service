@@ -10,12 +10,17 @@ import { ProductService } from "./product-service";
 import { S3Storage } from "../common/services/s3Storage";
 import createHttpError from "http-errors";
 import updateProductValidator from "./update-product-validator";
+import logger from "../config/logger";
 
 const router = express.Router();
 
 const productService = new ProductService();
 const s3Storage = new S3Storage();
-const productController = new ProductController(productService, s3Storage);
+const productController = new ProductController(
+    productService,
+    s3Storage,
+    logger,
+);
 
 router.post(
     "/",
@@ -50,5 +55,14 @@ router.put(
 );
 
 router.get("/", asyncWrapper(productController.index));
+
+router.get("/:productId", asyncWrapper(productController.getOne));
+
+router.delete(
+    "/:productId",
+    authenticate,
+    canAccess([Roles.ADMIN, Roles.MANAGER]),
+    asyncWrapper(productController.delete),
+);
 
 export default router;

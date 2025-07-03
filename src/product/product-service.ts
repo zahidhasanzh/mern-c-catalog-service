@@ -67,4 +67,12 @@ export class ProductService {
             customLabels: paginationLabels,
         });
     }
+
+    async getOne(productId: string) {
+        return await productModel.findOne({ _id: productId });
+    }
+
+    async deleteProduct(productId: string) {
+        return await productModel.findOneAndDelete({ _id: productId });
+    }
 }

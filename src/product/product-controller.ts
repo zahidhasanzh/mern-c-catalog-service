@@ -11,11 +11,13 @@ import { FileStorage } from "../common/types/storage";
 import { AuthRequest } from "../common/types";
 import { Roles } from "../common/constants";
 import mongoose from "mongoose";
+import { Logger } from "winston";
 
 export class ProductController {
     constructor(
         private productService: ProductService,
         private storage: FileStorage,
+        private logger: Logger,
     ) {}
     create = async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
@@ -176,5 +178,52 @@ export class ProductController {
             pageSize: products.limit,
             currentPage: products.page,
         });
+    };
+
+    getOne = async (req: Request, res: Response, next: NextFunction) => {
+        const { productId } = req.params;
+        const product = await this.productService.getOne(productId);
+        if (!product) {
+            return next(createHttpError(404, "Product not found"));
+        }
+        this.logger.info(`Getting product`, { id: product._id });
+        res.json(product);
+    };
+
+    delete = async (req: Request, res: Response, next: NextFunction) => {
+        const { productId } = req.params;
+
+        const product = await this.productService.deleteProduct(productId);
+
+        if (!product) {
+            return next(createHttpError(404, "Product not found"));
+        }
+
+        if ((req as AuthRequest).auth.role !== Roles.ADMIN) {
+            const tenant = (req as AuthRequest).auth.tenant;
+
+            if (product.tenantId !== String(tenant)) {
+                return next(
+                    createHttpError(
+                        403,
+                        "You are not allowed to delete this product",
+                    ),
+                );
+            }
+        }
+
+        try {
+            await this.storage.delete(product.image);
+            await this.productService.deleteProduct(productId);
+
+            this.logger.info("Deleted product", { id: productId });
+
+            res.status(200).json({
+                message: "Product deleted successfully",
+                id: productId,
+            });
+        } catch (err) {
+            next(err);
+        }
     };
 }
