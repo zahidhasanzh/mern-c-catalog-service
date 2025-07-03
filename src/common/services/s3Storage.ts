@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import config from "config";
 import { FileData, FileStorage } from "../types/storage";
+import createHttpError from "http-errors";
 
 export class S3Storage implements FileStorage {
     private client: S3Client;
@@ -41,7 +42,14 @@ export class S3Storage implements FileStorage {
         // @ts-ignore
         return await this.client.send(new DeleteObjectCommand(objectParams));
     }
-    getObjectUri(): void {
-        throw new Error("Method not implemented.");
+    getObjectUri(filename: string): string {
+        const bucket = config.get("s3.bucket");
+        const region = config.get("s3.region");
+        if (typeof bucket === "string" && typeof region === "string") {
+            return `https://${bucket}.s3.${region}.amazonaws.com/${filename}`;
+        }
+
+        const error = createHttpError(500, "Invalid s3 fonfiguration");
+        throw error;
     }
 }
