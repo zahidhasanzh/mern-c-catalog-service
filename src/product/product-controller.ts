@@ -5,7 +5,6 @@ import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 import { ProductService } from "./product-service";
 import { Filter, Product } from "./product-types";
-
 import { UploadedFile } from "express-fileupload";
 import { FileStorage } from "../common/types/storage";
 import { AuthRequest } from "../common/types";
