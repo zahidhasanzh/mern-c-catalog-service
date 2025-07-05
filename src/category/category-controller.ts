@@ -12,6 +12,8 @@ export class CategoryController {
     ) {
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
+        this.index = this.index.bind(this);
+        this.getOne = this.getOne.bind(this);
     }
 
     async create(req: Request, res: Response, next: NextFunction) {
