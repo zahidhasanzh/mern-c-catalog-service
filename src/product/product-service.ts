@@ -60,6 +60,9 @@ export class ProductService {
             {
                 $unwind: "$category",
             },
+            {
+                $sort: { _id: -1 },
+            },
         ]);
 
         return productModel.aggregatePaginate(aggregate, {
