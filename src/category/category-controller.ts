@@ -22,12 +22,14 @@ export class CategoryController {
             return next(createHttpError(400, result.array()[0].msg as string));
         }
 
-        const { name, priceConfiguration, attributes } = req.body as Category;
+        const { name, priceConfiguration, attributes, hasTopping } =
+            req.body as Category;
 
         const category = await this.categoryService.create({
             name,
             priceConfiguration,
             attributes,
+            hasTopping,
         });
 
         this.logger.info(`Created category`, { id: category._id });

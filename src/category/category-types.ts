@@ -15,4 +15,5 @@ export interface Category {
     name: string;
     priceConfiguration: PriceConfiguration;
     attributes: Attribute[];
+    hasTopping: boolean;
 }

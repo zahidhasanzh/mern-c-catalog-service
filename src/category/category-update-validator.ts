@@ -37,8 +37,8 @@ export default [
 
     body("priceConfiguration.*.priceType")
         .optional()
-        .custom((value: "base" | "aditional") => {
-            const validKeys = ["base", "aditional"];
+        .custom((value: "base" | "additional") => {
+            const validKeys = ["base", "additional"];
             if (!validKeys.includes(value)) {
                 throw new Error(
                     `${value} is invalid attribute for priceType field. Possible values are: [${validKeys.join(

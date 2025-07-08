@@ -47,6 +47,11 @@ const categorySchema = new mongoose.Schema<Category>({
         type: [attributeSchema],
         required: true,
     },
+    hasTopping: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
 });
 
 export default mongoose.model("Category", categorySchema);
@@ -77,4 +82,33 @@ export default mongoose.model("Category", categorySchema);
 //       "availableOptions": ["Less", "Medium", "Hot"]
 //     }
 //   ]
+// }
+
+// {
+//     "name": "Beverages",
+//     "priceConfiguration": {
+//         "Size": {
+//             "priceType": "base",
+//             "availableOptions": ["100ml", "330ml", "500ml"]
+//         },
+//         "Chilling": {
+//             "priceType": "additional",
+//             "availableOptions": ["Warm", "Cold"]
+//         }
+//     },
+//     "attributes": [
+//         {
+//             "name": "isHit",
+//             "widgetType": "switch",
+//             "defaultValue": "No",
+//             "availableOptions": ["Yes", "No"]
+//         },
+//         {
+//             "name": "Alcohol",
+//             "widgetType": "radio",
+//             "defaultValue": "Non-Alcoholic",
+//             "availableOptions": ["Non-Alcoholic", "Alcoholic"]
+//         }
+//     ],
+// 	 "hasTopping": false
 // }
