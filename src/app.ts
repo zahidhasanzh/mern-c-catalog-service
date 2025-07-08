@@ -10,7 +10,10 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-const ALLOWED_DOMAINS = [config.get("frontend.adminUI")];
+const ALLOWED_DOMAINS = [
+    config.get("frontend.adminUI"),
+    config.get("frontend.clientUI"),
+];
 app.use(
     cors({
         origin: ALLOWED_DOMAINS as string[],
