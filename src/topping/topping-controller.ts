@@ -6,11 +6,13 @@ import { CreataeRequestBody, Topping } from "./topping-types";
 import { ToppingService } from "./topping-service";
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
+import { MessageProducerBroker } from "../common/types/broker";
 
 export class ToppingController {
     constructor(
         private storage: FileStorage,
         private toppingService: ToppingService,
+        private broker: MessageProducerBroker,
     ) {}
 
     create = async (
@@ -43,8 +45,14 @@ export class ToppingController {
             } as Topping);
             // todo: add logging
 
-            // Send topping to kafka.
-            // todo: move topic name to the config
+            await this.broker.sendMessage(
+                "topping",
+                JSON.stringify({
+                    id: savedTopping._id,
+                    price: savedTopping.price,
+                    tenantId: savedTopping.tenantId,
+                }),
+            );
 
             res.json({ id: savedTopping._id });
         } catch (err) {
