@@ -21,3 +21,9 @@ export interface Paginatequery {
     page: number;
     limit: number;
 }
+
+export enum ProductEvents {
+    PRODUCT_CREATE = "PRODUCT_CREATE",
+    PRODUCT_UPDATE = "PRODUCT_UPDATE",
+    PRODUCT_DELETE = "PRODUCT_DELETE",
+}
